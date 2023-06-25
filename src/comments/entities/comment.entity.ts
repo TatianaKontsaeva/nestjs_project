@@ -10,4 +10,9 @@ export class Comment {
 
     @Column()
     user_id: number;
+
+    @Column({
+        type: 'datetime'
+    })
+    changed_at: Date
 }
