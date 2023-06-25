@@ -1,26 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CategoryModule } from './category/category.module';
-import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Category } from './category/entities/category.entity';
+import { UsersModule } from './users/users.module';
+import { TasksModule } from './tasks/tasks.module';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entities/comment.entity';
+import { Task } from './tasks/entities/task.entity';
+import { User } from './users/entities/user.entity';
+
 
 @Module({
   imports: [
-    CategoryModule, 
-    PostsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
       port: 3306,
       username: 'root',
       password: '', 
-      database: 'test_nest', 
-      entities: [Category],
+      database: 'tasks_list', 
+      entities: [Comment, Task, User], 
       synchronize: true,
     }),
+    UsersModule,
+    TasksModule,
+    CommentsModule,
   ],
     
   controllers: [AppController],

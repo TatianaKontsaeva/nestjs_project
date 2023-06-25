@@ -1,11 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Comment {
     @PrimaryGeneratedColumn()
     id: number;
-  
+
     @Column()
-    categoryName: string;
-  
+    text: string;
+
+    @Column()
+    user_id: number;
 }
