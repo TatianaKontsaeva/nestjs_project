@@ -2,5 +2,8 @@
   "cSpell.ignoreWords": [
     "DBNAME",
     "typeorm"
+  ],
+  "cSpell.words": [
+    "datetime"
   ]
 }

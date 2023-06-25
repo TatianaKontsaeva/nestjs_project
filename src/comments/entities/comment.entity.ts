@@ -14,5 +14,5 @@ export class Comment {
     @Column({
         type: 'datetime'
     })
-    changed_at: Date
+    changed_at: Date;
 }

@@ -10,4 +10,9 @@ export class Task {
 
     @Column()
     description: string;
+
+    @Column()
+    user_id: number;
+    user: any;
+
 }
