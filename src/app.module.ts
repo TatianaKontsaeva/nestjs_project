@@ -11,6 +11,7 @@ import { CommentsModule } from './comments/comments.module';
 import { Comment } from './comments/entities/comment.entity';
 import { Task } from './tasks/entities/task.entity';
 import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { User } from './users/entities/user.entity';
     UsersModule,
     TasksModule,
     CommentsModule,
+    AuthModule,
   ],
     
   controllers: [AppController],
