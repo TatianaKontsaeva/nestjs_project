@@ -1,16 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { Comment as commentEntity} from './entities/comment.entity'
+import { Comment as commentEntity } from './entities/comment.entity';
 
 @ApiTags('Comments')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-@ApiResponse({status: 201, description: 'created', type: commentEntity})  
+  @ApiResponse({ status: 201, description: 'created', type: commentEntity })
   @Post()
   create(@Body() createCommentDto: CreateCommentDto) {
     return this.commentsService.create(createCommentDto);

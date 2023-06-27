@@ -13,7 +13,6 @@ import { Task } from './tasks/entities/task.entity';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -22,9 +21,9 @@ import { AuthModule } from './auth/auth.module';
       host: process.env.DB_HOST,
       port: 3306,
       username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD, 
-      database: process.env.DB_DBNAME, 
-      entities: [Comment, Task, User], 
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DBNAME,
+      entities: [Comment, Task, User],
       synchronize: true,
     }),
     UsersModule,
@@ -32,7 +31,7 @@ import { AuthModule } from './auth/auth.module';
     CommentsModule,
     AuthModule,
   ],
-    
+
   controllers: [AppController],
   providers: [AppService],
 })

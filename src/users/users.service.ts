@@ -10,9 +10,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private repository: Repository<User>
-  ) { }
-  
+    private repository: Repository<User>,
+  ) {}
+
   async register(data: CreateUserDto) {
     const saltOrRounds = 10;
     data.password = await bcrypt.hash(data.password, saltOrRounds);
@@ -24,7 +24,7 @@ export class UsersService {
     if (!user) {
       return false;
     }
-    
+
     return await bcrypt.compare(data.password, user.password);
   }
 
@@ -36,8 +36,8 @@ export class UsersService {
     return this.repository.findOneBy({ email });
   }
 
-  update(id: number, data: UpdateUserDto) {    
-    return this.repository.save({...data, id});
+  update(id: number, data: UpdateUserDto) {
+    return this.repository.save({ ...data, id });
   }
 
   async remove(id: number) {
