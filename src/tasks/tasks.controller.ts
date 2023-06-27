@@ -3,11 +3,17 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Task as taskEntity} from './entities/task.entity'
 
+
+@ApiTags('Tasks')
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
+@ApiResponse({status: 201, description: 'created', type: taskEntity})
+@ApiResponse({status: 401, description: 'not authorized'})
   @Post()
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.tasksService.create(createTaskDto);
