@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity()
 export class Comment {
@@ -14,12 +15,11 @@ export class Comment {
   text: string;
 
   @ApiProperty()
-  @Column()
-  user_id: number;
-
-  @ApiProperty()
   @Column({
     type: 'datetime',
   })
   changed_at: Date;
+
+  @ManyToOne((type) => User, (user) => user.comments)
+  user: User;
 }
