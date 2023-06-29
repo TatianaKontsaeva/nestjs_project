@@ -20,6 +20,6 @@ export class Comment {
   })
   changed_at: Date;
 
-  @ManyToOne((type) => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments)
   user: User;
 }
