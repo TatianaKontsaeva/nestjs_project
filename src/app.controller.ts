@@ -22,20 +22,20 @@ export class AppController {
   ) {}
 
   @Get()
-  hello() {
+  hello(): string {
     return 'Hello World!';
   }
 
   @ApiResponse({ status: 201, description: 'successfully', type: userEntity })
   @Post('auth/register')
-  register(@Body() createUserDto: CreateUserDto) {
+  register(@Body() createUserDto: CreateUserDto): Promise<any> {
     return this.usersService.register(createUserDto);
   }
 
   @ApiResponse({ status: 201, description: 'created', type: userEntity })
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
-  async login(@Request() req) {
+  async login(@Request() req): Promise<any> {
     return this.authService.login(req.user);
   }
 }
