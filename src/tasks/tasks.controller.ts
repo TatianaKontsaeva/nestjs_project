@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   ParseIntPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -15,6 +16,9 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Task as taskEntity } from './entities/task.entity';
+import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadedFile } from '@nestjs/common';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -35,6 +39,7 @@ export class TasksController {
   }
 
   @Get(':id')
+  @UseInterceptors(LoggingInterceptor)
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.tasksService.findOne(+id);
   }
@@ -48,4 +53,10 @@ export class TasksController {
   remove(@Param('id') id: string) {
     return this.tasksService.remove(+id);
   }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  console.log(file);
+}
 }
