@@ -12,6 +12,8 @@ import { Comment } from './comments/entities/comment.entity';
 import { Task } from './tasks/entities/task.entity';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { BullModule } from '@nestjs/bull';
+import { ModerationModule } from './moderation/moderation.module';
 
 @Module({
   imports: [
@@ -30,6 +32,13 @@ import { AuthModule } from './auth/auth.module';
     TasksModule,
     CommentsModule,
     AuthModule,
+    ModerationModule,
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
   ],
 
   controllers: [AppController],
