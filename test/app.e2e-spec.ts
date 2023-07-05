@@ -21,4 +21,16 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  it('/comments (GET)', () => {
+    return request(app.getHttpServer()).get('/comments').expect(200).expect([]);
+  }); 
+
+
+
+
+  afterAll((done) => {
+    app.close();
+    done();
+  })
 });
