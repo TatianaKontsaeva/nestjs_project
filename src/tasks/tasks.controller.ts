@@ -9,16 +9,18 @@ import {
   UseGuards,
   ParseIntPipe,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskDto, updateTaskSchema } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Task as taskEntity } from './entities/task.entity';
 import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile } from '@nestjs/common';
+import { JoiValidationPipe } from '../pipes/ValidationPipes';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -44,8 +46,15 @@ export class TasksController {
     return this.tasksService.findOne(+id);
   }
 
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  console.log(file);
+}
+
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  @UsePipes(new JoiValidationPipe(updateTaskSchema))
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     return this.tasksService.update(+id, updateTaskDto);
   }
 
@@ -53,10 +62,7 @@ export class TasksController {
   remove(@Param('id') id: string) {
     return this.tasksService.remove(+id);
   }
+}
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-  console.log(file);
-}
-}
+
+
