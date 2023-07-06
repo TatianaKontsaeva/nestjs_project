@@ -49,8 +49,13 @@ export class TasksController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-  console.log(file);
-}
+    console.log(file);
+    let fs = require('fs');
+    fs.writeFile('123.txt', file.buffer, function (err) {
+      if (err) throw err;
+      console.log("It's saved");
+    });
+  }
 
   @Patch(':id')
   @UsePipes(new JoiValidationPipe(updateTaskSchema))
@@ -63,6 +68,3 @@ export class TasksController {
     return this.tasksService.remove(+id);
   }
 }
-
-
-
