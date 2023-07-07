@@ -23,12 +23,12 @@ describe('AppController (e2e)', () => {
   //     .expect('Hello World!');
   // });
 
-  // // //done
+  // // // //done
   // it('/comments (GET)', () => {
   //   return request(app.getHttpServer()).get('/comments').expect(200).expect([]);
   // });
 
-  // //done
+  // // //done
   // it('/comments/1 (GET)', () => {
   //   return request(app.getHttpServer())
   //     .get('/comments/1')
@@ -36,6 +36,7 @@ describe('AppController (e2e)', () => {
   //     .expect('');
   // });
 
+  // //done
   // it('/comments (POST)', () => {
   //   return request(app.getHttpServer())
   //     .post('/comments')
@@ -51,9 +52,18 @@ describe('AppController (e2e)', () => {
   //     });
   // });
 
-  // it('/tasks (GET)', () => {
-  //   return request(app.getHttpServer()).get('/tasks').expect(200).expect([]);
-  // });
+  it('/tasks (GET)', async () => {
+    const loginResponse = await request(app.getHttpServer())
+      .post('auth/login')
+      .expect(201)
+      .send({ email: 'test@test.com', password: '123456' });
+    const { access_token } = loginResponse.body;
+    return request(app.getHttpServer())
+      .get('/tasks')
+      .set('Authorization', 'Bearer' + access_token)
+      .expect(200)
+      .expect([]);
+  });
 
   afterAll((done) => {
     app.close();

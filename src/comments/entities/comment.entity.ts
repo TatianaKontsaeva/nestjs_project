@@ -14,11 +14,11 @@ export class Comment {
   @Column()
   text: string;
 
-  @ApiProperty()
-  @Column({
-    type: 'datetime',
-  })
-  changed_at: Date;
+  // @ApiProperty()
+  // @Column({
+  //   type: 'datetime',
+  // })
+  // changed_at: Date;
 
   @ManyToOne(() => User, (user) => user.comments)
   user: User;
